@@ -19,7 +19,7 @@ def part1(data, compare = [17, 61]):
     bots = defaultdict(lambda: [])
 
     ranLines = [False] * len(data)
-    while False in ranLines:
+    while not all(ranLines):
         for i, line in enumerate(data):
             if ranLines[i]:
                 continue
@@ -27,7 +27,7 @@ def part1(data, compare = [17, 61]):
             line = line.split(' ')
             vals = []
             for l in line:
-                if re.search('\d+', l):
+                if re.search(r'\d+', l):
                     vals.append(int(l))
 
             if len(vals) == 2:
@@ -54,7 +54,7 @@ def part2(data):
     bots = defaultdict(lambda: [])
 
     ranLines = [False] * len(data)
-    while False in ranLines:
+    while not all(ranLines):
         for i, line in enumerate(data):
             if ranLines[i]:
                 continue
@@ -62,7 +62,7 @@ def part2(data):
             line = line.split(' ')
             vals = []
             for l in line:
-                if re.search('\d+', l):
+                if re.search(r'\d+', l):
                     vals.append(int(l))
 
             if len(vals) == 2:
