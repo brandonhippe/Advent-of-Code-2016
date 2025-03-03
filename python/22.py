@@ -16,7 +16,7 @@ def part1(data):
     goalNode = (-1, 0)
     nodes = {}
     for line in data[2:]:
-        x, y, *otherNums = [int(n) for n in re.findall('\d+', line)]
+        x, y, *otherNums = [int(n) for n in re.findall(r'\d+', line)]
         nodes[(x, y)] = Node(x, y, otherNums)
         if y == 0 and x > goalNode[0]:
             goalNode = (x, y)
@@ -42,7 +42,7 @@ def part2(data):
     goalNode = (-1, 0)
     nodes = {}
     for line in data[2:]:
-        x, y, *otherNums = [int(n) for n in re.findall('\d+', line)]
+        x, y, *otherNums = [int(n) for n in re.findall(r'\d+', line)]
         nodes[(x, y)] = Node(x, y, otherNums)
         if y == 0 and x > goalNode[0]:
             goalNode = (x, y)
