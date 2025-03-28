@@ -73,7 +73,17 @@ fn part2(contents: String) -> i64 {
     let mut thread_recv: Vec<BinaryHeap<usize>> = vec![BinaryHeap::new(); num_cpus];
     let inc_amt = 1_000;
 
-    loop {
+    while found_keys.len() < 64 || thread_recv.iter().any(|ixs| {
+        if let Some(&latest) = ixs.peek() {
+            if let Some(&last_key) = found_keys.iter().max() {
+                latest < last_key
+            } else {
+                true
+            }
+        } else {
+            true
+        }
+    }) {
         let threads: Vec<_> = (0..num_cpus).map(|n| {   
             let tx_send = tx.clone();
             let cloned_contents = contents.clone();
@@ -116,19 +126,8 @@ fn part2(contents: String) -> i64 {
                 new_found.insert(sm);
             }
         }
+
         found_keys = found_keys.union(&new_found).map(|k| *k).collect();
-
-        if found_keys.len() >= 64 && thread_recv.iter().all(|ixs| {
-            let latest: usize = *ixs.peek().unwrap();
-            if let Some(&last_key) = found_keys.iter().max() {
-                latest > last_key
-            } else {
-                false
-            }
-        }) {
-            break;
-        }
-
         start_ix += inc_amt;
     }
     

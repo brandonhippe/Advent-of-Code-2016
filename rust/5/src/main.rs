@@ -1,46 +1,48 @@
 use relative_path::RelativePath;
 use std::env;
 use std::fs;
+use std::collections::BinaryHeap;
 use std::sync::mpsc::channel;
-use std::thread::available_parallelism;
+use std::thread::{self, available_parallelism};
 use std::time::Instant;
 
 fn part1(contents: String) -> String {
-    let mut order: Vec<(usize, char)> = vec![];
+    let mut order: BinaryHeap<(usize, char)> = BinaryHeap::new();
 
-    let threads = usize::from(available_parallelism().unwrap());
+    let num_cpus = usize::from(available_parallelism().unwrap()) - 1;
     let (tx, rx) = channel();
+    let mut start_ix = 0;
+    let inc_amt = 1_000;
 
-    for ix in 0..threads {
-        let contents = contents.clone();
-
-        let tx1 = tx.clone();
-
-        std::thread::spawn(move || {
-            let mut thread_ix = ix;
-            let threads = threads;
-
-            loop {
-                let hash = format!("{:x}", md5::compute(format!("{}{}", contents, thread_ix)));
-                if hash.starts_with("00000") {
-                    if tx1.send((thread_ix, hash.chars().nth(5).unwrap())).is_err() {
-                        break;
+    while order.len() < 8 {
+        let threads: Vec<_> = (0..num_cpus).map(|n| {   
+            let tx_send = tx.clone();
+            let cloned_contents = contents.clone();
+            thread::spawn(move || {
+                let mut test_ix = start_ix + n;
+                while test_ix < start_ix + inc_amt {
+                    let hash = format!("{:x}", md5::compute(format!("{}{}", cloned_contents, test_ix)));
+                    if hash.starts_with("00000") {
+                        if tx_send.send((test_ix, hash.chars().nth(5).unwrap())).is_err() {
+                            break;
+                        }
                     }
+                    test_ix += num_cpus;
                 }
 
-                thread_ix += threads;
-            }
-        });
+                test_ix
+            })
+        }).collect();
+        let _last_ixs: Vec<usize> = threads.into_iter().map(|t| t.join().unwrap()).collect();
+
+        while let Ok((test_ix, c)) = rx.try_recv() {
+            order.push((test_ix, c));
+        }
+
+        start_ix += inc_amt;
     }
 
-
-    rx.iter().take(8).for_each(|(pos, val)| {
-        order.push((pos, val));
-    });
-
-    order.sort_by(|a, b| a.0.cmp(&b.0));
-
-    return order.iter().map(|(_, c)| *c).collect();
+    return order.into_sorted_vec().iter().rev().take(8).rev().map(|(_, c)| *c).collect();
 }
 
 fn part2(contents: String) -> String {
