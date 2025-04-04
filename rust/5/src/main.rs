@@ -12,7 +12,7 @@ fn part1(contents: String) -> String {
     let num_cpus = usize::from(available_parallelism().unwrap()) - 1;
     let (tx, rx) = channel();
     let mut start_ix = 0;
-    let inc_amt = 1_000;
+    let inc_amt = 20_000;
 
     while order.len() < 8 {
         let threads: Vec<_> = (0..num_cpus).map(|n| {   
