@@ -40,7 +40,7 @@ def part2(data):
 
 def cpy(regs, text):
     x, y = text
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]
@@ -58,12 +58,12 @@ def dec(regs, x):
 
 def jnz(regs, text):
     x, y = text
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]
 
-    if len(re.findall('-?\d+', y)) != 0:
+    if len(re.findall(r'-?\d+', y)) != 0:
         y = int(y)
     else:
         y = regs[y]
@@ -74,7 +74,7 @@ def jnz(regs, text):
 
 def out(regs, x):
     x = x[0]
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]

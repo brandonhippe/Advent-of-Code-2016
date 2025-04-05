@@ -17,7 +17,7 @@ def part1(data):
 
     discs = []
     for line in data:
-        discNum, positions, _, start = [int(x) for x in re.findall('-?\d+', line)]
+        discNum, positions, _, start = [int(x) for x in re.findall(r'-?\d+', line)]
         discs.append(Disc(discNum, positions, start))
 
     return fallTime(discs)
@@ -29,7 +29,7 @@ def part2(data):
 
     discs = []
     for line in data:
-        discNum, positions, _, start = [int(x) for x in re.findall('-?\d+', line)]
+        discNum, positions, _, start = [int(x) for x in re.findall(r'-?\d+', line)]
         discs.append(Disc(discNum, positions, start))
 
     return fallTime(discs + [Disc(len(discs) + 1, 11, 0)])

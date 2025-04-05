@@ -25,7 +25,7 @@ def part1(data):
         OPS[op](regs, text)
         regs['PC'] += 1
 
-    return calc(regs, [int(re.findall('-?\d+', l[1])[0]) for l in instructions[16:18]]) if regs['PC'] < len(instructions) else regs['a']
+    return calc(regs, [int(re.findall(r'-?\d+', l[1])[0]) for l in instructions[16:18]]) if regs['PC'] < len(instructions) else regs['a']
 
 
 def part2(data):
@@ -41,12 +41,12 @@ def part2(data):
         OPS[op](regs, text)
         regs['PC'] += 1
 
-    return calc(regs, [int(re.findall('-?\d+', l[1])[0]) for l in instructions[16:18]])
+    return calc(regs, [int(re.findall(r'-?\d+', l[1])[0]) for l in instructions[16:18]])
 
 
 def cpy(regs, text):
     x, y = text
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]
@@ -65,7 +65,7 @@ def dec(regs, x):
 def jnz(regs, text):
     x, y = text
     y = int(y)
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]

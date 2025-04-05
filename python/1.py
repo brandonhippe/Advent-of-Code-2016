@@ -35,7 +35,7 @@ def part1(data):
         else:
             facing = (-facing[1], facing[0])
 
-        for _ in range(int(re.findall('\d+', d)[0])):
+        for _ in range(int(re.findall(r'\d+', d)[0])):
             pos = tuple(p + o for p, o in zip(pos, facing))
 
             visited.add(pos)
@@ -63,7 +63,7 @@ def part2(data):
         else:
             facing = (-facing[1], facing[0])
 
-        for _ in range(int(re.findall('\d+', d)[0])):
+        for _ in range(int(re.findall(r'\d+', d)[0])):
             pos = tuple(p + o for p, o in zip(pos, facing))
 
             if pos in visited and firstRepeat is None:

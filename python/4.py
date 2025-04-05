@@ -55,7 +55,7 @@ class keyVal:
 
 class Room:
     def __init__(self, roomText):
-        start, end = re.search('\d+', roomText).span()
+        start, end = re.search(r'\d+', roomText).span()
         self.roomName = roomText[:start].replace('-', ' ')
         self.sectorID = int(roomText[start:end])
         self.checkSum = roomText[end+1:-1]

@@ -15,7 +15,7 @@ def part1(data):
     0
     """
 
-    return sum([1 if validTriangle(nums) else 0 for nums in [[int(x) for x in re.findall('\d+', line)] for line in data]])
+    return sum([1 if validTriangle(nums) else 0 for nums in [[int(x) for x in re.findall(r'\d+', line)] for line in data]])
 
 
 def part2(data):
@@ -25,7 +25,7 @@ def part2(data):
     6
     """
 
-    nums = [[int(x) for x in re.findall('\d+', line)] for line in data]
+    nums = [[int(x) for x in re.findall(r'\d+', line)] for line in data]
 
     count = 0
     for j in range(3):

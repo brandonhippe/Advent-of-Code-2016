@@ -19,16 +19,16 @@ def part1(data, password = 'abcdefgh'):
     for line in data:
         if "swap" in line:
             if "position" in line:
-                a, b = (int(x) for x in re.findall('\d+', line))
+                a, b = (int(x) for x in re.findall(r'\d+', line))
             else:
-                a, b = (scramble.index(c[-1]) for c in re.findall('letter [a-z]', line))
+                a, b = (scramble.index(c[-1]) for c in re.findall(r'letter [a-z]', line))
 
             scramble[a], scramble[b] = scramble[b], scramble[a]
         elif "rotate" in line:
             if "right" in line:
-                rot = list(int(x) for x in re.findall('\d+', line))[0]
+                rot = list(int(x) for x in re.findall(r'\d+', line))[0]
             elif "left" in line:
-                rot = -list(int(x) for x in re.findall('\d+', line))[0]
+                rot = -list(int(x) for x in re.findall(r'\d+', line))[0]
             else:
                 rot = scramble.index(line[-1])
                 rot += 1 if rot < 4 else 2
@@ -37,10 +37,10 @@ def part1(data, password = 'abcdefgh'):
 
             scramble = scramble[-rot:] + scramble[:-rot]
         elif "reverse" in line:
-            low, high = (int(x) for x in re.findall('\d+', line))
+            low, high = (int(x) for x in re.findall(r'\d+', line))
             scramble = scramble[:low] + list(reversed(scramble[low:high + 1])) + scramble[high + 1:]
         else:
-            start, end = (int(x) for x in re.findall('\d+', line))
+            start, end = (int(x) for x in re.findall(r'\d+', line))
             if start > end:
                 scramble = scramble[:end] + [scramble[start]] + scramble[end:start] + scramble[start + 1:]
             else:
@@ -60,9 +60,9 @@ def part2(data, scrambled = 'fbgdceah'):
     for line in data[::-1]:
         if "swap" in line:
             if "position" in line:
-                a, b = (int(x) for x in re.findall('\d+', line))
+                a, b = (int(x) for x in re.findall(r'\d+', line))
             else:
-                a, b = (password.index(c[-1]) for c in re.findall('letter [a-z]', line))
+                a, b = (password.index(c[-1]) for c in re.findall(r'letter [a-z]', line))
 
             password[a], password[b] = password[b], password[a]
         elif "rotate" in line:
@@ -85,19 +85,19 @@ def part2(data, scrambled = 'fbgdceah'):
                 password = password[i:] + password[:i]
                 continue
             elif "right" in line:
-                rot = list(int(x) for x in re.findall('\d+', line))[0]
+                rot = list(int(x) for x in re.findall(r'\d+', line))[0]
             else:
-                rot = -list(int(x) for x in re.findall('\d+', line))[0]
+                rot = -list(int(x) for x in re.findall(r'\d+', line))[0]
 
             rot *= -1
             rot %= len(password)
 
             password = password[-rot:] + password[:-rot]
         elif "reverse" in line:
-            low, high = (int(x) for x in re.findall('\d+', line))
+            low, high = (int(x) for x in re.findall(r'\d+', line))
             password = password[:low] + list(reversed(password[low:high + 1])) + password[high + 1:]
         else:
-            end, start = (int(x) for x in re.findall('\d+', line))
+            end, start = (int(x) for x in re.findall(r'\d+', line))
             if start > end:
                 password = password[:end] + [password[start]] + password[end:start] + password[start + 1:]
             else:

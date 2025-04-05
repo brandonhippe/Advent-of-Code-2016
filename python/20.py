@@ -15,7 +15,7 @@ def part1(data, allowed = {(0, 4294967295)}):
     3
     """
 
-    lines = set(tuple(int(x) for x in re.findall('\d+', line)) for line in data)
+    lines = set(tuple(int(x) for x in re.findall(r'\d+', line)) for line in data)
 
     while len(lines) > 0:
         low, high = list(lines)[0]
@@ -57,7 +57,7 @@ def part2(data, allowed = {(0, 4294967295)}):
     2
     """
 
-    lines = set(tuple(int(x) for x in re.findall('\d+', line)) for line in data)
+    lines = set(tuple(int(x) for x in re.findall(r'\d+', line)) for line in data)
 
     while len(lines) > 0:
         low, high = list(lines)[0]

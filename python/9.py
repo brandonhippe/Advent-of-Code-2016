@@ -35,7 +35,7 @@ def part1(data):
     line = data[0]
 
     searchStart = 0
-    marker = re.search('\([^(]*\)', line[searchStart:])
+    marker = re.search(r'\([^(]*\)', line[searchStart:])
     while marker:
         start, end = marker.span()
         start += searchStart
@@ -43,13 +43,13 @@ def part1(data):
 
         searchStart = start
 
-        size, repeat = [int(x) for x in re.findall('\d+', marker.group())]
+        size, repeat = [int(x) for x in re.findall(r'\d+', marker.group())]
         searchStart += size * repeat
         repeat -= 1
 
         line = line[:start] + ''.join([line[end:end+size]] * repeat) + line[end:]
 
-        marker = re.search('\([^(]*\)', line[searchStart:])
+        marker = re.search(r'\([^(]*\)', line[searchStart:])
 
     return len(line)
 
@@ -76,7 +76,7 @@ def part2(data):
     line = data[0]
 
     searchStart = 0
-    marker = re.search('\([^(]*\)', line[searchStart:])
+    marker = re.search(r'\([^(]*\)', line[searchStart:])
     while marker:
         start, end = marker.span()
         start += searchStart
@@ -84,25 +84,25 @@ def part2(data):
 
         searchStart = start
 
-        size, repeat = [int(x) for x in re.findall('\d+', marker.group())]
+        size, repeat = [int(x) for x in re.findall(r'\d+', marker.group())]
         searchStart += size * repeat
         repeat -= 1
 
         line = line[:start] + ''.join([line[end:end+size]] * repeat) + line[end:]
 
-        marker = re.search('\([^(]*\)', line[searchStart:])
+        marker = re.search(r'\([^(]*\)', line[searchStart:])
 
     return determineLen(line, {})
 
 
 def determineLen(line, memo):
     length = len(line)
-    marker = re.search('\([^(]*\)', line)
+    marker = re.search(r'\([^(]*\)', line)
     while marker:
         start, end = marker.span()
         length -= end - start
 
-        size, repeat = [int(x) for x in re.findall('\d+', marker.group())]
+        size, repeat = [int(x) for x in re.findall(r'\d+', marker.group())]
         repeat -= 1
 
         subLine = line[end:end+size]
@@ -116,7 +116,7 @@ def determineLen(line, memo):
 
         line = line[:start] + line[end:]
 
-        marker = re.search('\([^(]*\)', line)
+        marker = re.search(r'\([^(]*\)', line)
 
     return length
 

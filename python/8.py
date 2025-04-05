@@ -20,13 +20,13 @@ def part1(data, rows = 6, cols = 50):
     
     for line in data:
         if line[1] == 'e':
-            c, r = [int(x) for x in re.findall('\d+', line)]
+            c, r = [int(x) for x in re.findall(r'\d+', line)]
             screen[0:r, 0:c] = 1
         elif 'x' in line:
-            c, amt = [int(x) for x in re.findall('\d+', line)]
+            c, amt = [int(x) for x in re.findall(r'\d+', line)]
             screen = np.concatenate((screen[:, :c], np.transpose(np.atleast_2d(np.concatenate((screen[-amt:, c], screen[:-amt, c])))), screen[:, c+1:]), axis=1)
         elif 'y' in line:
-            r, amt = [int(x) for x in re.findall('\d+', line)]
+            r, amt = [int(x) for x in re.findall(r'\d+', line)]
             screen = np.concatenate((screen[:r, :], np.atleast_2d(np.concatenate((screen[r, -amt:], screen[r, :-amt]))), screen[r+1:, :]), axis=0)
 
     return sum(screen.flat)
@@ -40,13 +40,13 @@ def part2(data, rows = 6, cols = 50):
     
     for line in data:
         if line[1] == 'e':
-            c, r = [int(x) for x in re.findall('\d+', line)]
+            c, r = [int(x) for x in re.findall(r'\d+', line)]
             screen[0:r, 0:c] = 1
         elif 'x' in line:
-            c, amt = [int(x) for x in re.findall('\d+', line)]
+            c, amt = [int(x) for x in re.findall(r'\d+', line)]
             screen = np.concatenate((screen[:, :c], np.transpose(np.atleast_2d(np.concatenate((screen[-amt:, c], screen[:-amt, c])))), screen[:, c+1:]), axis=1)
         elif 'y' in line:
-            r, amt = [int(x) for x in re.findall('\d+', line)]
+            r, amt = [int(x) for x in re.findall(r'\d+', line)]
             screen = np.concatenate((screen[:r, :], np.atleast_2d(np.concatenate((screen[r, -amt:], screen[r, :-amt]))), screen[r+1:, :]), axis=0)
 
     return printScreen(screen)

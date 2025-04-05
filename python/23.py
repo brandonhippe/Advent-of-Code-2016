@@ -55,7 +55,7 @@ def part2(data):
 
 def cpy(regs, _, text):
     x, y = text
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]
@@ -74,12 +74,12 @@ def dec(regs, _, x):
 def jnz(regs, _, text):
     x, y = text
     
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]
 
-    if len(re.findall('-?\d+', y)) != 0:
+    if len(re.findall(r'-?\d+', y)) != 0:
         y = int(y)
     else:
         y = regs[y]
@@ -93,7 +93,7 @@ TOGGLES = {"cpy": "jnz", "inc": "dec", "dec": "inc", "jnz": "cpy", "tgl": "inc"}
 
 def tgl(regs, instructions, x):
     x = x[0]
-    if len(re.findall('-?\d+', x)) != 0:
+    if len(re.findall(r'-?\d+', x)) != 0:
         x = int(x)
     else:
         x = regs[x]
